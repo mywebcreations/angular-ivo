@@ -17,6 +17,14 @@ export class RegistrationService {
   // }
 
   saveRegistration(formValue: RegistrationData): Observable<RegistrationData> {
-    return this.http.post<RegistrationData>(`${URL}`, formValue);
+    return this.http.post<RegistrationData>(`${URL}/posts`, formValue);
+  }
+
+  getRegistration(id: number): Observable<RegistrationData> {
+    return this.http.get<RegistrationData>(`${URL}/posts/${id}`);
+  }
+
+  getRegistrations(): Observable<RegistrationData> {
+    return this.http.get<RegistrationData>(`${URL}/posts`);
   }
 }

@@ -1,0 +1,19 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    },
+    {
+      "name": "Adedoyin",
+      "telephone": "0487108185",
+      "email": "mywebcreativities@gmail.com",
+      "gender": "Male",
+      "comingWithOthers": "I'm bringing some colleagues",
+      "howMany": "20",
+      "countOnYou": "",
+      "id": 5288
+    }
+  ]
+}

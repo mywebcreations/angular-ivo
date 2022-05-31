@@ -78,10 +78,10 @@ export class RegistrationComponent implements OnInit {
   // }
 
   saveData() {
-    const id = Math.floor(1000 + Math.random() * 9000);
+    const formId = Math.floor(1000 + Math.random() * 9000);
     const formData = this.registrationForm.value;
-    formData['id'] = id;
-    console.log(formData);
+    formData['formId'] = formId;
+    // console.log(formData);
     this.registrationService.saveRegistration(formData).subscribe(
       (response) => console.log(response),
       (error) => console.log(error)

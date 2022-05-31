@@ -1,4 +1,4 @@
-<div style="text-align: center; margin-top: 50px; margin-bottom: 100px">
+<div style="text-align: center; margin-top: 150px; margin-bottom: 100px">
 <h1>Are you coming? Give us more details.</h1>
 <h1>Dear invited,</h1>
 <h1>We will appreciate if you confirm your presence</h1>
@@ -45,8 +45,10 @@
         </mat-form-field>
     </ng-container>
     <!-- The buttons -->
-    <button (click)="processYesChoice()">Yes</button>
-    <button (click)="processNoChoice()">No</button>
+        <div>May we count on you?</div>
+        <button (click)="processYesChoice()">Yes</button>
+        <button (click)="processNoChoice()">No</button>
+    
 </form>
 </ng-container>
 
@@ -83,6 +85,7 @@
         </mat-form-field>
     </ng-container>
     <!-- The buttons -->
+    <div>May we count on you?</div>
     <button (click)="processYesChoice()">Yes</button>
     <button (click)="processNoChoice()">No</button>
 
