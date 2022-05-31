@@ -7,18 +7,27 @@ import { RegistrationService } from '../core/service/registration.service';
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
-  styleUrls: ['./registration.component.css']
+  styleUrls: ['./registration.component.css'],
 })
 export class RegistrationComponent implements OnInit {
-
   registrationForm!: FormGroup;
   registrationForm2!: FormGroup;
-  comingAlone: Array<string> = ["Please select", "Just myself", "I'm bringing some colleagues"];
+  comingAlone: Array<string> = [
+    'Please select',
+    'Just myself',
+    "I'm bringing some colleagues",
+  ];
 
   showForm1: boolean = true;
   showForm2: boolean = false;
-  
-  constructor(private formBuilder: FormBuilder, private registrationService: RegistrationService) { }
+  showHowManyColleagues: boolean = false;
+  selectedOption: string = 'Please select';
+  showWhoIsComingWithYou: boolean = true;
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private registrationService: RegistrationService
+  ) {}
 
   ngOnInit(): void {
     this.registrationForm = this.formBuilder.group({
@@ -27,20 +36,22 @@ export class RegistrationComponent implements OnInit {
       email: ['', Validators.required],
       gender: ['', Validators.required],
       comingWithOthers: ['', Validators.required],
-      countOnYou: ['', Validators.required]
-    })
+      howMany: ['', Validators.required],
+      countOnYou: ['', Validators.required],
+    });
     this.registrationForm2 = this.formBuilder.group({
       name: ['', Validators.required],
       telephone: [''],
       email: [''],
       gender: [''],
       comingWithOthers: [''],
-      countOnYou: ['']
-    })
+      howMany: [''],
+      countOnYou: [''],
+    });
   }
 
   saveData(): Observable<RegistrationData> {
-    return of() //just to remove error. Please change to correct observable.
+    return of(); //just to remove error. Please change to correct observable.
   }
 
   processYesChoice(): void {
@@ -50,7 +61,12 @@ export class RegistrationComponent implements OnInit {
   processNoChoice(): void {
     this.showForm1 = false;
     this.showForm2 = true;
+    this.showWhoIsComingWithYou = false;
   }
 
-
+  controlHowManyColleagesField() {
+    this.selectedOption == "I'm bringing some colleagues"
+      ? (this.showHowManyColleagues = true)
+      : (this.showHowManyColleagues = false);
+  }
 }
