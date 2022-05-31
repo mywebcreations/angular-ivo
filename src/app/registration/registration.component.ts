@@ -66,15 +66,17 @@ export class RegistrationComponent implements OnInit {
       : (this.showHowManyColleagues = false);
   }
 
-  // saveData() {
-  //   // const valueChanges$ = this.registrationForm.valueChanges;
-  //   const formValue$: Observable<RegistrationData> = of(this.registrationForm.value);
-  //   console.log(formValue$);
-  //   formValue$.pipe(
-  //       map((formValue: RegistrationData) => this.registrationService.saveRegistration(formValue)),
+  // saveData() {//implementing autosave.
+  //   const valueChanges$ = this.registrationForm.valueChanges;
+  //   console.log(valueChanges$);
+  //   valueChanges$.pipe(
+  //       concatMap((formValue: RegistrationData) => this.registrationService.saveRegistration(formValue)),
   //       catchError(errors => of(errors)),
   //       tap(result=>this.saveSuccess(result))
   //   );
+  // }
+  // saveSuccess(result: any) {
+  //   console.log(result);
   // }
 
   saveData() {
@@ -88,7 +90,5 @@ export class RegistrationComponent implements OnInit {
     );
   }
 
-  saveSuccess(result: any) {
-    console.log(result);
-  }
+ 
 }

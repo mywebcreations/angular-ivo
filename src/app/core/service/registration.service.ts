@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { RegistrationData } from '../model/registration-data';
-const URL = environment.url;
+// const URL = environment.url;
+const URL = 'http://127.0.0.1:4567';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,6 @@ export class RegistrationService {
   constructor(private http: HttpClient) {}
 
   // saveRegistration(formValue: RegistrationData): Observable<RegistrationData> {
-  //   console.log(this.http.post<RegistrationData>(`${URL}`, formValue));
   //   return this.http.post<RegistrationData>(`${URL}`, formValue);
   // }
 
