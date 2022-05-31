@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable, of } from 'rxjs';
+import { catchError, concatMap, map, Observable, of, tap } from 'rxjs';
 import { RegistrationData } from '../core/model/registration-data';
 import { RegistrationService } from '../core/service/registration.service';
 
@@ -50,10 +50,6 @@ export class RegistrationComponent implements OnInit {
     });
   }
 
-  saveData(): Observable<RegistrationData> {
-    return of(); //just to remove error. Please change to correct observable.
-  }
-
   processYesChoice(): void {
     this.showForm1 = true;
     this.showForm2 = false;
@@ -68,5 +64,31 @@ export class RegistrationComponent implements OnInit {
     this.selectedOption == "I'm bringing some colleagues"
       ? (this.showHowManyColleagues = true)
       : (this.showHowManyColleagues = false);
+  }
+
+  // saveData() {
+  //   // const valueChanges$ = this.registrationForm.valueChanges;
+  //   const formValue$: Observable<RegistrationData> = of(this.registrationForm.value);
+  //   console.log(formValue$);
+  //   formValue$.pipe(
+  //       map((formValue: RegistrationData) => this.registrationService.saveRegistration(formValue)),
+  //       catchError(errors => of(errors)),
+  //       tap(result=>this.saveSuccess(result))
+  //   );
+  // }
+
+  saveData() {
+    const id = Math.floor(1000 + Math.random() * 9000);
+    const formData = this.registrationForm.value;
+    formData['id'] = id;
+    console.log(formData);
+    this.registrationService.saveRegistration(formData).subscribe(
+      (response) => console.log(response),
+      (error) => console.log(error)
+    );
+  }
+
+  saveSuccess(result: any) {
+    console.log(result);
   }
 }
