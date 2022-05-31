@@ -15,6 +15,7 @@
     "@angular/router": "^13.3.10",
     "@cds/core": "^6.0.0",
     "@popperjs/core": "^2.11.5",
+    "json-server": "^0.17.0",
     "postcss": "^8.4.14",
     "postcss-loader": "^7.0.0",
     "rxjs": "^7.5.5",
@@ -28,7 +29,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "json-server": "json-server --watch db.json --port 4567"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~13.3.7",
