@@ -1,17 +1,34 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
 
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HelloComponent } from './hello.component';
-
-import { HomeComponent } from './home/home.component'
-import { ClarityModule } from '@clr/angular';
+import { RegistrationService } from './core/service/registration.service';
+import { HomeComponent } from './home/home.component';
+import { RegistrationComponent } from './registration/registration.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AngularMaterialModule } from './material.module';
+
+
 
 @NgModule({
-  imports: [BrowserModule, FormsModule, ClarityModule, BrowserAnimationsModule],
-  declarations: [AppComponent, HelloComponent, HomeComponent],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    RegistrationComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    AngularMaterialModule
+ 
+    
+  ],
+  providers: [],
   bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class AppModule {}
+export class AppModule { }
