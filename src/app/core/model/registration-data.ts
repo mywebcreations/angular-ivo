@@ -7,5 +7,7 @@ export interface RegistrationData {
     | 'Please select'
     | 'Just myself'
     | "I'm bringing some colleagues";
-  countOnYou?: boolean;
+  howMany?: number;
+  countOnYouYes?: string;
+  countOnYouNo?: string;
 }
