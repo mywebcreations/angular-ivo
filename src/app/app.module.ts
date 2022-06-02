@@ -9,25 +9,32 @@ import { HomeComponent } from './home/home.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './material.module';
-
+import { HttpClientModule } from '@angular/common/http';
+import { EditRegistrationComponent } from './edit-registration/edit-registration.component';
+import { CreateRegFormService } from './core/service/create-reg-form.service';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    EditRegistrationComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    AngularMaterialModule
+    AngularMaterialModule,
+    HttpClientModule
  
     
   ],
-  providers: [],
+  providers: [
+    RegistrationService,
+    CreateRegFormService
+  ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
