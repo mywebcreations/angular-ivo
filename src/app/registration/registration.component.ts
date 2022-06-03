@@ -1,6 +1,21 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { catchError, concatMap, map, Observable, of, tap } from 'rxjs';
+import {
+  ActivatedRoute,
+  NavigationEnd,
+  Router,
+  RoutesRecognized,
+} from '@angular/router';
+import {
+  catchError,
+  concatMap,
+  filter,
+  map,
+  Observable,
+  of,
+  pairwise,
+  tap,
+} from 'rxjs';
 import { RegistrationData } from '../core/model/registration-data';
 import { CreateRegFormService } from '../core/service/create-reg-form.service';
 import { RegistrationService } from '../core/service/registration.service';
@@ -8,29 +23,63 @@ import { RegistrationService } from '../core/service/registration.service';
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
-  styleUrls: ['./registration.component.css']
+  styleUrls: ['./registration.component.css'],
 })
 export class RegistrationComponent implements OnInit {
-
   registrationForm!: FormGroup;
   registrationForm2!: FormGroup;
-  comingAlone: Array<string> = ["Please select", "Just myself", "I'm bringing some colleagues"];
+
+  // Registration forms for edit-registration component
+  @Input() EditRegistrationForm!: FormGroup;
+  @Input() EditRegistrationForm2!: FormGroup;
+  @Input() userId!: string;
+
+  comingAlone: Array<string> = [
+    'Please select',
+    'Just myself',
+    "I'm bringing some colleagues",
+  ];
   showForm1: boolean = true;
   showForm2: boolean = false;
   showHowManyColleagues: boolean = false;
-  selectedOption: string = "Please select";
+  selectedOption: string = 'Please select';
   showWhoIsComingWithYou: boolean = true;
   countOnYouYes: string = 'Yes';
   countOnYouNo: string = '';
 
-  @Input() registration$!: Observable<RegistrationData>;
-  
-  constructor(private regForm: CreateRegFormService, private registrationService: RegistrationService) { }
+  // @Input() registration$!: Observable<RegistrationData>;
+
+  constructor(
+    private regForm: CreateRegFormService,
+    private registrationService: RegistrationService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
+
+  ngOnChanges(): void {
+    this.regForm.getRegistrationForm('RegistrationComponent', null);
+    if (this.EditRegistrationForm === undefined) {
+      this.registrationForm = this.regForm.registrationForm;
+    } else {
+      this.registrationForm = this.EditRegistrationForm;
+    }
+
+    if (this.EditRegistrationForm2 === undefined) {
+      this.registrationForm2 = this.regForm.registrationForm2;
+    } else {
+      this.registrationForm2 = this.EditRegistrationForm2;
+    }
+    console.log(`EditRegistrationForm: ${this.EditRegistrationForm}`);
+    console.log(`EditRegistrationForm2: ${this.EditRegistrationForm2}`);
+    console.log(`RegistrationForm: ${this.registrationForm}`);
+    console.log(`RegistrationForm2: ${this.registrationForm2}`);
+    console.log(this.userId);
+  }
 
   ngOnInit(): void {
-    this.regForm.getRegistrationForm('RegistrationComponent', null);
-    this.registrationForm = this.regForm.registrationForm;
-    this.registrationForm2 = this.regForm.registrationForm2;
+    alert(
+      "Click the 'No' button If you don't see user data displayed; this will be because user chose 'No'"
+    );
   }
 
   processYesChoice(): void {
@@ -48,8 +97,9 @@ export class RegistrationComponent implements OnInit {
   }
 
   controlHowManyColleagesField() {
-    this.selectedOption == "I'm bringing some colleagues" ?
-     this.showHowManyColleagues = true : this.showHowManyColleagues = false;
+    this.selectedOption == "I'm bringing some colleagues"
+      ? (this.showHowManyColleagues = true)
+      : (this.showHowManyColleagues = false);
   }
 
   // saveData() {
@@ -64,28 +114,29 @@ export class RegistrationComponent implements OnInit {
   // }
 
   saveData() {
-    const id = Math.floor(1000 + Math.random() * 9000);
-    const formData = this.countOnYouYes == 'Yes' ? this.registrationForm.value : 
-                      this.registrationForm2.value;
-    formData['id'] = id;
+    const id = this.userId
+      ? this.userId
+      : Math.floor(1000 + Math.random() * 9000);
+    const formData =
+      this.countOnYouYes == 'Yes'
+        ? this.registrationForm.value
+        : this.registrationForm2.value; //choose form based on Yes/No choice
+    formData['id'] = id.toString();
     formData['countOnYouYes'] = this.countOnYouYes;
     formData['countOnYouNo'] = this.countOnYouNo;
     // console.log(formData);
-    this.registrationService.saveRegistration(formData)
-        .subscribe(
-          (response) => this.saveSuccess(response, id),
-          (error) => console.log(error)
-        )
-    window.location.reload();
+    this.registrationService.saveRegistration(formData, this.userId).subscribe(
+      (response) => this.saveSuccess(response, formData['id']),
+      (error) => console.log(error)
+    );
+    // window.location.reload();
   }
 
   saveSuccess(result: any, id: number) {
-    
     console.log(result);
     alert(
       `Thank you for registring for our event. You can review your registration at this url:
-      http://127.0.0.1:4200/edit-registration/${id}.`   
+      http://127.0.0.1:4200/edit-registration/${id}.`
     );
   }
-
 }

@@ -1,4 +1,5 @@
-/* Add application styles & imports to this file! */
+/* You can add global styles to this file, and also import other style files */
+
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 html,
 body {
@@ -31,4 +32,10 @@ form {
 }
 .button-wrapper {
   margin-top: 10px;
+}
+button.subRegForm {
+  display: block;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
 }

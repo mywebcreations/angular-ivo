@@ -8,12 +8,11 @@ const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'register', component: RegistrationComponent },
-  { path: 'edit-registration/:id', component: EditRegistrationComponent }
-  
+  { path: 'edit-registration/:id', component: EditRegistrationComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
