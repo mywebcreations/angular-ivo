@@ -1,0 +1,126 @@
+<!-- <app-edit-registration 
+    [EditRegistrationForm]="EditRegistrationForm"
+    [EditRegistrationForm2]="EditRegistrationForm"
+></app-edit-registration> -->
+
+
+
+<div style="text-align: center; margin-top: 150px; margin-bottom: 100px">
+<h1>Are you coming? Give us more details.</h1>
+<h1>Dear invited,</h1>
+<h1>We will appreciate if you confirm your presence</h1>
+<p>
+  We are very happy that you have the intention to come! Please fill the form
+  below in order to help us plan the best way to organize our event.
+</p>
+</div>
+
+<ng-container *ngIf="showForm1 === true">
+<form [formGroup]="registrationForm" (ngSubmit)="saveData()" novalidate>
+    <!-- Name -->
+    <mat-form-field class="example-full-width">
+        <input matInput placeholder="Name" formControlName="name" #name />
+    </mat-form-field>
+    <!-- Phone Number -->
+    <mat-form-field class="example-full-width">
+        <input matInput placeholder="Phone Number" formControlName="telephone" #telephone/>
+    </mat-form-field>
+    <!-- Email -->
+    <mat-form-field class="example-full-width">
+        <input matInput placeholder="Email" formControlName="email" #email/>
+    </mat-form-field>
+    <!-- Gender -->
+    <div class="misc-bottom-padding">
+        <mat-label>Gender:</mat-label>
+        <mat-radio-group aria-label="" formControlName="gender" #gender>
+        <mat-radio-button value="Male">Male</mat-radio-button>
+        <mat-radio-button value="Female">Female</mat-radio-button>
+        </mat-radio-group>
+    </div>
+    <!-- comingWithOthers -->
+    <mat-form-field>
+        <mat-label>Who is coming with you?</mat-label>
+        <mat-select [(ngModel)]="selectedOption" formControlName="comingWithOthers" (selectionChange)="controlHowManyColleagesField()">
+            <mat-option [value]="cominAlone" *ngFor="let cominAlone of comingAlone">{{cominAlone}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field> 
+    <!-- How many colleagues? -->
+    <ng-container *ngIf="showHowManyColleagues === true">
+        <mat-form-field class="example-full-width">
+            <input matInput placeholder="How many colleagues?" formControlName="howMany" />
+        </mat-form-field>
+    </ng-container>
+    <!-- The buttons -->
+        <div>May we count on you?</div>
+        <button type="button" (click)="processYesChoice()">Yes</button>
+        <button type="button" (click)="processNoChoice()">No</button>
+    <!-- HIDE THESE FIELDS -->
+    <!-- <mat-form-field class="example-full-width">
+        <input matInput formControlName="countOnYouYes" [value]="countOnYouYes" />
+    </mat-form-field>
+    
+    <input type="text" formControlName="countOnYouYes" [value]="countOnYouYes" />
+    <input type="text" formControlName="countOnYouNo" value={{countOnYouNo}} /> -->
+    <!-- SUBMIT BUTTON -->
+    <button class="subRegForm" type="submit">Submit Response</button>
+    
+</form>
+</ng-container>
+
+<ng-container *ngIf="showForm2 === true">
+<form [formGroup]="registrationForm2" (ngSubmit)="saveData()" novalidate>
+    <!-- Name -->
+    <mat-form-field class="example-full-width">
+        <input matInput placeholder="Name_" formControlName="name" />
+    </mat-form-field>
+    <!-- Phone Number -->
+    <mat-form-field class="example-full-width">
+        <input matInput placeholder="Phone Number" formControlName="telephone" />
+    </mat-form-field>
+    <!-- Email -->
+    <mat-form-field class="example-full-width">
+        <input matInput placeholder="Email" formControlName="email" />
+    </mat-form-field>
+    <!-- Gender -->
+    <div class="misc-bottom-padding">
+        <mat-label>Gender:</mat-label>
+        <mat-radio-group aria-label="" formControlName="gender">
+          <mat-radio-button value="Male">Male</mat-radio-button>
+          <mat-radio-button value="Female">Female</mat-radio-button>
+        </mat-radio-group>
+    </div>
+    <!-- comingWithOthers -->
+    <ng-container *ngIf="showWhoIsComingWithYou === true">
+        <mat-form-field>
+            <mat-label>Who is coming with you?</mat-label>
+            <mat-select [(ngModel)]="selectedOption" formControlName="comingWithOthers">
+                <mat-option [value]="cominAlone" *ngFor="let cominAlone of comingAlone">{{cominAlone}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </ng-container>
+    <!-- The buttons -->
+    <div>May we count on you?</div>
+    <button type="button" (click)="processYesChoice()">Yes</button>
+    <button type="button" (click)="processNoChoice()">No</button>
+    <!-- HIDE THESE FIELDS -->
+    <!-- <mat-form-field class="example-full-width">
+        <input matInput formControlName="countOnYouYes" [value]="countOnYouYes" />
+    </mat-form-field>
+    
+    <input type="text" formControlName="countOnYouYes" [value]="countOnYouYes" />
+    <input type="text" formControlName="countOnYouNo" value={{countOnYouNo}} /> -->
+    <!-- SUBMIT BUTTON -->
+    <button class="subRegForm" type="submit">Submit Response</button>
+
+</form>
+
+</ng-container>
+
+
+   
+
+
+
+
