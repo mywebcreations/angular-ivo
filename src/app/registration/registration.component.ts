@@ -1,22 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {
-  ActivatedRoute,
-  NavigationEnd,
-  Router,
-  RoutesRecognized,
-} from '@angular/router';
-import {
-  catchError,
-  concatMap,
-  filter,
-  map,
-  Observable,
-  of,
-  pairwise,
-  tap,
-} from 'rxjs';
-import { RegistrationData } from '../core/model/registration-data';
 import { CreateRegFormService } from '../core/service/create-reg-form.service';
 import { RegistrationService } from '../core/service/registration.service';
 
@@ -25,15 +8,16 @@ import { RegistrationService } from '../core/service/registration.service';
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css'],
 })
-export class RegistrationComponent implements OnInit {
+export class RegistrationComponent implements OnChanges, OnInit {
   registrationForm!: FormGroup;
   registrationForm2!: FormGroup;
 
   // Registration forms for edit-registration component
+  
   @Input() EditRegistrationForm!: FormGroup;
   @Input() EditRegistrationForm2!: FormGroup;
   @Input() userId!: string;
-
+  
   comingAlone: Array<string> = [
     'Please select',
     'Just myself',
@@ -52,8 +36,6 @@ export class RegistrationComponent implements OnInit {
   constructor(
     private regForm: CreateRegFormService,
     private registrationService: RegistrationService,
-    private router: Router,
-    private route: ActivatedRoute
   ) {}
 
   ngOnChanges(): void {
@@ -71,15 +53,13 @@ export class RegistrationComponent implements OnInit {
     }
     console.log(`EditRegistrationForm: ${this.EditRegistrationForm}`);
     console.log(`EditRegistrationForm2: ${this.EditRegistrationForm2}`);
-    console.log(`RegistrationForm: ${this.registrationForm}`);
-    console.log(`RegistrationForm2: ${this.registrationForm2}`);
     console.log(this.userId);
   }
 
   ngOnInit(): void {
-    alert(
-      "Click the 'No' button If you don't see user data displayed; this will be because user chose 'No'"
-    );
+    // alert(
+    //   "On the form page, click the 'No' button If you don't see user data displayed; this will be because user chose 'No'"
+    // );
   }
 
   processYesChoice(): void {
@@ -97,9 +77,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   controlHowManyColleagesField() {
-    this.selectedOption == "I'm bringing some colleagues"
-      ? (this.showHowManyColleagues = true)
-      : (this.showHowManyColleagues = false);
+    this.selectedOption == "I'm bringing some colleagues" ? (this.showHowManyColleagues = true) : (this.showHowManyColleagues = false);
   }
 
   // saveData() {
@@ -136,7 +114,7 @@ export class RegistrationComponent implements OnInit {
     console.log(result);
     alert(
       `Thank you for registring for our event. You can review your registration at this url:
-      http://127.0.0.1:4200/edit-registration/${id}.`
+      http://127.0.0.1:4200/registration/${id}.`
     );
   }
 }
