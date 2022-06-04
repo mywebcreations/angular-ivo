@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { Observable, of, switchMap, tap } from 'rxjs';
+import { Observable, switchMap, tap } from 'rxjs';
 import { RegistrationData } from '../core/model/registration-data';
 import { CreateRegFormService } from '../core/service/create-reg-form.service';
 import { RegistrationService } from '../core/service/registration.service';
@@ -54,8 +54,8 @@ export class EditRegistrationComponent implements OnInit {
       'EditRegistrationComponent',
       this.formRegData
     );
-    console.log((this.EditRegistrationForm = this.regForm.registrationForm));
-    console.log((this.EditRegistrationForm2 = this.regForm.registrationForm2));
+    this.EditRegistrationForm = this.regForm.registrationForm;
+    this.EditRegistrationForm2 = this.regForm.registrationForm2;
 
     // this.router.navigate(['/register']); //this.router.navigate(['/register', { id: Idvalue }]);
   }
