@@ -9,7 +9,7 @@ const URL = "http://127.0.0.1:4567";
 })
 export class RegistrationService {
   // registrations$: Observable<RegistrationData> = this.http.get<RegistrationData>(`${URL}/posts`);
-  userId = new BehaviorSubject('0');
+  userId = new BehaviorSubject(null);
   userId$ = this.userId.asObservable();
 
   constructor(private http: HttpClient) {}

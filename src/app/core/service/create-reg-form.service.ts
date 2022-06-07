@@ -13,9 +13,9 @@ export class CreateRegFormService {
     email: ['', Validators.required],
     gender: ['', Validators.required],
     comingWithOthers: ['', Validators.required],
-    howMany: ['', Validators.required],
-    countOnYouYes: ['', Validators.required],
-    countOnYouNo: ['', Validators.required],
+    howMany: ['0', Validators.required],
+    countOnYouYes: [''],
+    countOnYouNo: [''],
   });
   registrationForm2: FormGroup = this.formBuilder.group({
     name: ['', Validators.required],
@@ -23,9 +23,9 @@ export class CreateRegFormService {
     email: [''],
     gender: [''],
     comingWithOthers: [''],
-    howMany: [''],
-    countOnYouYes: ['', Validators.required],
-    countOnYouNo: ['', Validators.required],
+    howMany: ['0'],
+    countOnYouYes: [''],
+    countOnYouNo: [''],
   });
   private editRegistrationForm = new BehaviorSubject(this.registrationForm);
   editRegistrationForm$ = this.editRegistrationForm.asObservable();
@@ -43,8 +43,8 @@ export class CreateRegFormService {
         gender: [formData?.gender, Validators.required],
         comingWithOthers: [formData?.comingWithOthers, Validators.required],
         howMany: [formData?.howMany, Validators.required],
-        countOnYouYes: [formData?.countOnYouYes, Validators.required],
-        countOnYouNo: [formData?.countOnYouNo, Validators.required]
+        countOnYouYes: [formData?.countOnYouYes],
+        countOnYouNo: [formData?.countOnYouNo]
       })
     )
   }
@@ -58,8 +58,8 @@ export class CreateRegFormService {
         gender: [formData?.gender],
         comingWithOthers: [formData?.comingWithOthers],
         howMany: [formData?.howMany],
-        countOnYouYes: [formData?.countOnYouYes, Validators.required],
-        countOnYouNo: [formData?.countOnYouNo, Validators.required],
+        countOnYouYes: [formData?.countOnYouYes],
+        countOnYouNo: [formData?.countOnYouNo],
       })
     )
   }

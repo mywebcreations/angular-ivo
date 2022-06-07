@@ -1,6 +1,7 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { catchError, Observable } from 'rxjs';
+import { SubSink } from 'subsink';
 import { CreateRegFormService } from '../core/service/create-reg-form.service';
 import { RegistrationService } from '../core/service/registration.service';
 
@@ -9,7 +10,7 @@ import { RegistrationService } from '../core/service/registration.service';
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css'],
 })
-export class RegistrationComponent implements OnInit {
+export class RegistrationComponent implements OnInit, OnDestroy {
   registrationForm!: FormGroup;
   registrationForm2!: FormGroup;
   userId!: string;
@@ -28,12 +29,13 @@ export class RegistrationComponent implements OnInit {
   showForm1: boolean = true;
   showForm2: boolean = false;
   showHowManyColleagues: boolean = false;
+  displayInputField: string = 'displayNone'; //css class to be toggled by controlHowManyColleagesField method.
   selectedOption: string = 'Please select';
   showWhoIsComingWithYou: boolean = true;
   countOnYouYes: string = 'Yes';
   countOnYouNo: string = '';
 
-  // @Input() registration$!: Observable<RegistrationData>;
+  subs = new SubSink();
 
   constructor(
     private regForm: CreateRegFormService,
@@ -51,24 +53,30 @@ export class RegistrationComponent implements OnInit {
     let editRegistrationForm;
     let editRegistrationForm2;
     let userId;
-    this.editRegistrationForm$.pipe(
+    this.subs.add(
+      this.editRegistrationForm$.pipe(
+          catchError(async (error) => console.log('Caught Error', error)) 
+      ).subscribe(
+        (form) => editRegistrationForm = form,
+        (error) => console.log(error)
+      )
+    );
+    this.subs.add(
+      this.editRegistrationForm2$.pipe(
         catchError(async (error) => console.log('Caught Error', error)) 
-    ).subscribe(
-      (form) => editRegistrationForm = form,
-      (error) => console.log(error)
-    )
-    this.editRegistrationForm2$.pipe(
-      catchError(async (error) => console.log('Caught Error', error)) 
-    ).subscribe(
-      (form) => editRegistrationForm2 = form,
-      (error) => console.log(error)
-    )
-    this.userId$.pipe(
-      catchError(async (error) => console.log('Caught Error', error)) 
-    ).subscribe(
-      (id) => userId = id,
-      (error) => console.log(error)
-    )
+      ).subscribe(
+        (form) => editRegistrationForm2 = form,
+        (error) => console.log(error)
+      )
+    );
+    this.subs.add(
+      this.userId$.pipe(
+        catchError(async (error) => console.log('Caught Error', error)) 
+      ).subscribe(
+        (id) => userId = id,
+        (error) => console.log(error)
+      )
+    );
 
     if (editRegistrationForm === undefined) {
       this.registrationForm = this.regForm.registrationForm;
@@ -105,7 +113,12 @@ export class RegistrationComponent implements OnInit {
   }
 
   controlHowManyColleagesField() {
-    this.selectedOption == "I'm bringing some colleagues" ? (this.showHowManyColleagues = true) : (this.showHowManyColleagues = false);
+    if (this.selectedOption == "I'm bringing some colleagues") {
+      this.showHowManyColleagues = true;
+      this.displayInputField = 'displayInlineBlock';
+    } else {
+      this.showHowManyColleagues = false
+    }
   }
 
   // saveData() {
@@ -120,16 +133,29 @@ export class RegistrationComponent implements OnInit {
   // }
 
   saveData() {
+    const formSubmitted =
+      this.countOnYouYes == 'Yes'
+        ? this.registrationForm
+        : this.registrationForm2; //choose form based on Yes/No choice
+
+    if (formSubmitted.invalid) {
+      formSubmitted.markAllAsTouched();
+      return;
+    }
+
+    const formData = formSubmitted.value;
     const id = this.userId
       ? this.userId
       : Math.floor(1000 + Math.random() * 9000);
-    const formData =
-      this.countOnYouYes == 'Yes'
-        ? this.registrationForm.value
-        : this.registrationForm2.value; //choose form based on Yes/No choice
+    
     formData['id'] = id.toString();
     formData['countOnYouYes'] = this.countOnYouYes;
     formData['countOnYouNo'] = this.countOnYouNo;
+
+    if(formData['comingWithOthers'] != "I'm bringing some colleagues") {
+      formData['howMany'] = 0;
+    }
+
     console.log(formData);
     this.registrationService.saveRegistration(formData, this.userId).subscribe(
       (response) => this.saveSuccess(response, formData['id']),
@@ -144,5 +170,9 @@ export class RegistrationComponent implements OnInit {
       `Thank you for registring for our event. You can review your registration at this url:
       http://127.0.0.1:4200/registration/${id}.`
     );
+  }
+
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
   }
 }

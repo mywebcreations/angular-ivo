@@ -9,7 +9,7 @@
 </div>
 
 <ng-container *ngIf="showForm1 === true">
-<form [formGroup]="registrationForm" (ngSubmit)="saveData()" novalidate>
+<form [formGroup]="registrationForm" (ngSubmit)="saveData()">
     <!-- Name -->
     <mat-form-field class="example-full-width">
         <input matInput placeholder="Name" formControlName="name" #name />
@@ -40,7 +40,7 @@
     </mat-form-field> 
     <!-- How many colleagues? -->
     <ng-container *ngIf="showHowManyColleagues === true">
-        <mat-form-field class="example-full-width">
+        <mat-form-field class="example-full-width" [ngClass]="displayInputField">
             <input matInput placeholder="How many colleagues?" formControlName="howMany" />
         </mat-form-field>
     </ng-container>
@@ -62,7 +62,7 @@
 </ng-container>
 
 <ng-container *ngIf="showForm2 === true">
-<form [formGroup]="registrationForm2" (ngSubmit)="saveData()" novalidate>
+<form [formGroup]="registrationForm2" (ngSubmit)="saveData()">
     <!-- Name -->
     <mat-form-field class="example-full-width">
         <input matInput placeholder="Name" formControlName="name" />
