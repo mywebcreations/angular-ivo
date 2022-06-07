@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { catchError, Observable } from 'rxjs';
 import { CreateRegFormService } from '../core/service/create-reg-form.service';
 import { RegistrationService } from '../core/service/registration.service';
 
@@ -8,15 +9,16 @@ import { RegistrationService } from '../core/service/registration.service';
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css'],
 })
-export class RegistrationComponent implements OnChanges, OnInit {
+export class RegistrationComponent implements OnInit {
   registrationForm!: FormGroup;
   registrationForm2!: FormGroup;
+  userId!: string;
 
   // Registration forms for edit-registration component
-  
-  @Input() EditRegistrationForm!: FormGroup;
-  @Input() EditRegistrationForm2!: FormGroup;
-  @Input() userId!: string;
+  editRegistrationForm$ = this.regForm.editRegistrationForm$;
+  editRegistrationForm2$ = this.regForm.editRegistrationForm2$;
+
+  userId$ = this.registrationService.userId$;
   
   comingAlone: Array<string> = [
     'Please select',
@@ -38,28 +40,54 @@ export class RegistrationComponent implements OnChanges, OnInit {
     private registrationService: RegistrationService,
   ) {}
 
-  ngOnChanges(): void {
-    this.regForm.getRegistrationForm('RegistrationComponent', null);
-    if (this.EditRegistrationForm === undefined) {
-      this.registrationForm = this.regForm.registrationForm;
-    } else {
-      this.registrationForm = this.EditRegistrationForm;
-    }
-
-    if (this.EditRegistrationForm2 === undefined) {
-      this.registrationForm2 = this.regForm.registrationForm2;
-    } else {
-      this.registrationForm2 = this.EditRegistrationForm2;
-    }
-    console.log(`EditRegistrationForm: ${this.EditRegistrationForm}`);
-    console.log(`EditRegistrationForm2: ${this.EditRegistrationForm2}`);
-    console.log(this.userId);
-  }
+  // ngOnChanges(): void {
+  // }
 
   ngOnInit(): void {
     // alert(
     //   "On the form page, click the 'No' button If you don't see user data displayed; this will be because user chose 'No'"
     // );
+    // this.regForm.getRegistrationForm('RegistrationComponent', null);
+    let editRegistrationForm;
+    let editRegistrationForm2;
+    let userId;
+    this.editRegistrationForm$.pipe(
+        catchError(async (error) => console.log('Caught Error', error)) 
+    ).subscribe(
+      (form) => editRegistrationForm = form,
+      (error) => console.log(error)
+    )
+    this.editRegistrationForm2$.pipe(
+      catchError(async (error) => console.log('Caught Error', error)) 
+    ).subscribe(
+      (form) => editRegistrationForm2 = form,
+      (error) => console.log(error)
+    )
+    this.userId$.pipe(
+      catchError(async (error) => console.log('Caught Error', error)) 
+    ).subscribe(
+      (id) => userId = id,
+      (error) => console.log(error)
+    )
+
+    if (editRegistrationForm === undefined) {
+      this.registrationForm = this.regForm.registrationForm;
+    } else {
+      this.registrationForm = editRegistrationForm;
+    }
+
+    if (editRegistrationForm2 === undefined) {
+      this.registrationForm2 = this.regForm.registrationForm2;
+    } else {
+      this.registrationForm2 = editRegistrationForm2;
+    }
+    this.userId = userId;
+    console.log(`EditRegistrationForm: ${editRegistrationForm}`);
+    console.log(`EditRegistrationForm2: ${editRegistrationForm2}`);
+    console.log(`RegistrationForm: ${this.registrationForm}`);
+    console.log(`RegistrationForm2: ${this.registrationForm2}`);
+    console.log(this.userId);
+
   }
 
   processYesChoice(): void {
@@ -102,7 +130,7 @@ export class RegistrationComponent implements OnChanges, OnInit {
     formData['id'] = id.toString();
     formData['countOnYouYes'] = this.countOnYouYes;
     formData['countOnYouNo'] = this.countOnYouNo;
-    // console.log(formData);
+    console.log(formData);
     this.registrationService.saveRegistration(formData, this.userId).subscribe(
       (response) => this.saveSuccess(response, formData['id']),
       (error) => console.log(error)

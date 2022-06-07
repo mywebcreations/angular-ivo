@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { RegistrationData } from '../model/registration-data';
 const URL = "http://127.0.0.1:4567";
 
@@ -9,6 +9,8 @@ const URL = "http://127.0.0.1:4567";
 })
 export class RegistrationService {
   // registrations$: Observable<RegistrationData> = this.http.get<RegistrationData>(`${URL}/posts`);
+  userId = new BehaviorSubject('0');
+  userId$ = this.userId.asObservable();
 
   constructor(private http: HttpClient) {}
 
@@ -16,6 +18,10 @@ export class RegistrationService {
   //   console.log(this.http.post<RegistrationData>(`${URL}`, formValue));
   //   return this.http.post<RegistrationData>(`${URL}`, formValue);
   // }
+
+  updateUserId(userId: string): void {
+    this.userId.next(userId);
+  }
 
   saveRegistration(
     formValue: RegistrationData,
