@@ -1,1 +1,22 @@
-<router-outlet></router-outlet>
+<mat-sidenav-container fullscreen>
+    <mat-sidenav #sidenav>
+        <mat-nav-list (click)="sidenav.close()">
+            <a mat-list-item routerLink="home">
+                <!-- <mat-icon>home</mat-icon> -->
+                <span>Home</span>
+            </a>
+            <a mat-list-item routerLink="register">
+                <span>Register</span>
+            </a>
+            <a mat-list-item routerLink="['registration', :id]">
+                <span>Modify</span>
+            </a>
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-toolbar color="primary">
+        <button mat-icon-button (click)="sidenav.open()">
+            <mat-icon>menu</mat-icon>
+        </button>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+</mat-sidenav-container>

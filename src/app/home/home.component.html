@@ -22,27 +22,29 @@
     background-size: 50% 100%;
     text-align: center;
     position: absolute;
-    top: 0;
+    top: 63px;
     width: 100%;
     
     
   "
   *ngIf="event"
 >
-  <h1>{{ event.title }}</h1>
+  <h1 class="title-big">{{ event.title }}</h1>
   <img src="{{ event.logo }}" width="110px" height="120px" />
-  <h1>{{ event.companyName }}</h1>
-  <h3>{{ event.tagline }}</h3>
-  <h1>{{ event.message }}</h1>
-  <h1>{{ event.messageContd }}</h1>
-  <h2>
-    <span>{{ event.dayOfWeek }}</span>
-    <span>{{ event.month }}</span>
-    <span>{{ event.day }}</span>
-    <span>{{ event.timePeriod }}</span>
-  </h2>
+  <h1 class="title-big comp-name">{{ event.companyName }}</h1>
+  <p class="tagline">{{ event.tagline }}</p>
+  <p class="message">{{ event.message }}</p>
+  <p class="message">{{ event.messageContd }}</p>
+  <div class="grid-container">
+    <div class="grid-item">{{ event.dayOfWeek }}</div>
+    <div class="grid-item grid-container-2">
+      <div class="grid-item-2 evt-month">{{ event.month }}</div>
+      <div class="grid-item-2 evt-day">{{ event.day }}</div>
+    </div>
+    <div class="grid-item last-grid">{{ event.timePeriod }}</div>
+  </div>
 
   <a routerLink="/register"
-    ><button>{{ event.action }}</button></a
+    ><button mat-raised-button color="primary">{{ event.action }}</button></a
   >
 </div>

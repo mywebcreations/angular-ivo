@@ -1,3 +1,6 @@
+<app-nav>
+</app-nav>
+
 <div style="text-align: center; margin-top: 150px; margin-bottom: 100px">
 <h1>Are you coming? Give us more details.</h1>
 <h1>Dear invited,</h1>
@@ -46,8 +49,14 @@
     </ng-container>
     <!-- The buttons -->
         <div>May we count on you?</div>
-        <button type="button" (click)="processYesChoice()">Yes</button>
-        <button type="button" (click)="processNoChoice()">No</button>
+        <button mat-icon-button type="button" (click)="processYesChoice()">
+            <mat-icon svgIcon="thumbs-up" aria-hidden="false" aria-label="Example thumbs up SVG icon"></mat-icon>
+            Yes
+        </button>
+        <button mat-icon-button type="button" (click)="processNoChoice()">
+            <mat-icon svgIcon="thumbs-down" aria-hidden="false" aria-label="Example thumbs up SVG icon"></mat-icon>
+            No
+        </button>
     <!-- HIDE THESE FIELDS -->
     <!-- <mat-form-field class="example-full-width">
         <input matInput formControlName="countOnYouYes" [value]="countOnYouYes" />
