@@ -14,7 +14,7 @@
 .tagline {
     font-size: 1.5em;
     color:#29aae1;
-    margin-bottom: 55px;
+    margin-bottom: 40px;
 }
 .message {
     font-size: 2.5em;
@@ -41,6 +41,7 @@
 .evt-month {
     /* line-height: 1em; */
     margin-bottom: 20px;
+    color: #29aae1;
 }
 .evt-day {
     font-size: 2em;
@@ -49,4 +50,8 @@
 }
 .last-grid {    
     border-right: none;
+    color: #020056;
+}
+.accept-reject {
+    margin-top: 10px;
 }

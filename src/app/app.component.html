@@ -2,13 +2,15 @@
     <mat-sidenav #sidenav>
         <mat-nav-list (click)="sidenav.close()">
             <a mat-list-item routerLink="home">
-                <!-- <mat-icon>home</mat-icon> -->
+                <mat-icon>home</mat-icon>
                 <span>Home</span>
             </a>
             <a mat-list-item routerLink="register">
+                <mat-icon>person_add</mat-icon>
                 <span>Register</span>
             </a>
             <a mat-list-item routerLink="['registration', :id]">
+                <mat-icon>fa fa-edit</mat-icon>
                 <span>Modify</span>
             </a>
         </mat-nav-list>
@@ -17,6 +19,7 @@
         <button mat-icon-button (click)="sidenav.open()">
             <mat-icon>menu</mat-icon>
         </button>
+        <span class="my-span-in-header">Are you coming? Give us more details.</span>
     </mat-toolbar>
     <router-outlet></router-outlet>
 </mat-sidenav-container>

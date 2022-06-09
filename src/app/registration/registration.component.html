@@ -1,27 +1,26 @@
-<app-nav>
-</app-nav>
-
-<div style="text-align: center; margin-top: 150px; margin-bottom: 100px">
-<h1>Are you coming? Give us more details.</h1>
-<h1>Dear invited,</h1>
-<h1>We will appreciate if you confirm your presence</h1>
-<p>
-  We are very happy that you have the intention to come! Please fill the form
-  below in order to help us plan the best way to organize our event.
-</p>
+<div class="msg-b4-form">
+    <h1 class="dear-inv">Dear invited,</h1>
+    <h1 class="dear-inv">We will appreciate if you confirm your presence</h1>
+    <p class="we-are-happy">
+    We are very happy that you have the intention to come! Please fill the form
+    below in order to help us plan the best way to organize our event.
+    </p>
 </div>
 
 <ng-container *ngIf="showForm1 === true">
 <form [formGroup]="registrationForm" (ngSubmit)="saveData()">
     <!-- Name -->
+    <span><mat-icon>person</mat-icon></span>
     <mat-form-field class="example-full-width">
         <input matInput placeholder="Name" formControlName="name" #name />
     </mat-form-field>
     <!-- Phone Number -->
+    <mat-icon>phone</mat-icon>
     <mat-form-field class="example-full-width">
         <input matInput placeholder="Phone Number" formControlName="telephone" #telephone/>
     </mat-form-field>
     <!-- Email -->
+    <mat-icon>email</mat-icon>
     <mat-form-field class="example-full-width">
         <input matInput placeholder="Email" formControlName="email" #email/>
     </mat-form-field>
@@ -49,14 +48,11 @@
     </ng-container>
     <!-- The buttons -->
         <div>May we count on you?</div>
-        <button mat-icon-button type="button" (click)="processYesChoice()">
-            <mat-icon svgIcon="thumbs-up" aria-hidden="false" aria-label="Example thumbs up SVG icon"></mat-icon>
-            Yes
-        </button>
-        <button mat-icon-button type="button" (click)="processNoChoice()">
-            <mat-icon svgIcon="thumbs-down" aria-hidden="false" aria-label="Example thumbs up SVG icon"></mat-icon>
-            No
-        </button>
+        <!-- <mat-icon>far fa-thumbs-up</mat-icon> -->
+        <button mat-raised-button type="button" (click)="processYesChoice()">Yes</button>
+        <!-- <mat-icon>far fa-thumbs-down</mat-icon> -->
+        <button mat-raised-button type="button" (click)="processNoChoice()">No</button>
+
     <!-- HIDE THESE FIELDS -->
     <!-- <mat-form-field class="example-full-width">
         <input matInput formControlName="countOnYouYes" [value]="countOnYouYes" />
@@ -65,7 +61,7 @@
     <input type="text" formControlName="countOnYouYes" [value]="countOnYouYes" />
     <input type="text" formControlName="countOnYouNo" value={{countOnYouNo}} /> -->
     <!-- SUBMIT BUTTON -->
-    <button class="subRegForm" type="submit">Submit Response</button>
+    <button mat-raised-button class="subRegForm" type="submit">Submit Response</button>
     
 </form>
 </ng-container>
@@ -104,8 +100,8 @@
     </ng-container>
     <!-- The buttons -->
     <div>May we count on you?</div>
-    <button type="button" (click)="processYesChoice()">Yes</button>
-    <button type="button" (click)="processNoChoice()">No</button>
+    <button mat-raised-button type="button" (click)="processYesChoice()">Yes</button>
+    <button mat-raised-button type="button" (click)="processNoChoice()">No</button>
     <!-- HIDE THESE FIELDS -->
     <!-- <mat-form-field class="example-full-width">
         <input matInput formControlName="countOnYouYes" [value]="countOnYouYes" />
@@ -114,7 +110,7 @@
     <input type="text" formControlName="countOnYouYes" [value]="countOnYouYes" />
     <input type="text" formControlName="countOnYouNo" value={{countOnYouNo}} /> -->
     <!-- SUBMIT BUTTON -->
-    <button class="subRegForm" type="submit">Submit Response</button>
+    <button mat-raised-button class="subRegForm" type="submit">Submit Response</button>
 
 </form>
 

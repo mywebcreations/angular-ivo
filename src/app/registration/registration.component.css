@@ -4,3 +4,16 @@
 .displayNone {
     display: none;
 }
+.msg-b4-form {
+    text-align: center; 
+    margin-top: 50px; 
+    margin-bottom: 50px;
+}
+.dear-inv {
+    font-size: 2em;
+    font-weight: bold;
+    line-height: 20px;
+}
+.we-are-happy {
+    margin-top: 5px;
+}
