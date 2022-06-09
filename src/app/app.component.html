@@ -10,7 +10,7 @@
                 <span>Register</span>
             </a>
             <a mat-list-item routerLink="['registration', :id]">
-                <mat-icon>fa fa-edit</mat-icon>
+                <mat-icon>edit</mat-icon>
                 <span>Modify</span>
             </a>
         </mat-nav-list>
@@ -19,7 +19,7 @@
         <button mat-icon-button (click)="sidenav.open()">
             <mat-icon>menu</mat-icon>
         </button>
-        <span class="my-span-in-header">Are you coming? Give us more details.</span>
+        <a class="my-span-in-header" routerLink="register"><span>Are you coming? Give us more details.</span></a>
     </mat-toolbar>
     <router-outlet></router-outlet>
 </mat-sidenav-container>
