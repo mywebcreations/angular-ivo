@@ -6,6 +6,17 @@ import { RegistrationData } from '../model/registration-data';
 @Injectable({
   providedIn: 'root',
 })
+
+/*
+ * When the RegistrationComponent opens or runs, there is a call to this service to produce
+ * the registration forms. These are two empty forms contained in class properties.
+ * When the EditRegistrationComponent opens or runs, two major things happens:
+ * 1) The EditRegistrationComponent class gets the saved registration data of the user.
+ * 2) It navigates to the RegistrationComponent, and changes (or pupulates) the empty registration forms
+ *    with the saved user data.
+ * The great advantage of this approach is that the RegistrationComponent is both used for new registrations 
+ * and also to modify user registration.
+ */
 export class CreateRegFormService {
   registrationForm: FormGroup = this.formBuilder.group({
     name: ['', Validators.required],

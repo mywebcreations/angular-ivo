@@ -95,7 +95,8 @@
         <mat-form-field>
             <mat-label>Who is coming with you?</mat-label>
             <mat-select [(ngModel)]="selectedOption" formControlName="comingWithOthers">
-                <mat-option [value]="cominAlone" *ngFor="let cominAlone of comingAlone">{{cominAlone}}
+                <mat-option [value]="cominAlone" *ngFor="let cominAlone of comingAlone">
+					{{cominAlone}}
                 </mat-option>
             </mat-select>
         </mat-form-field>

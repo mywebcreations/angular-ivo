@@ -55,7 +55,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     let userId;
     this.subs.add(
       this.editRegistrationForm$.pipe(
-          catchError(async (error) => console.log('Caught Error', error)) 
+        catchError(async (error) => console.log('Caught Error', error)) 
       ).subscribe(
         (form) => editRegistrationForm = form,
         (error) => console.log(error)

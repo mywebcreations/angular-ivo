@@ -28,7 +28,8 @@ export class EditRegistrationComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.registration$ = this.route.paramMap.pipe(
+    //get registration data of user from json server base; returns an observable that when subscribed to emits the json data.
+	this.registration$ = this.route.paramMap.pipe(
       catchError(async (error) => console.log('Caught Error', error)),
       tap((params: ParamMap) => (this.userId = params.get('id')!)),
       switchMap((params: ParamMap) =>
@@ -37,7 +38,10 @@ export class EditRegistrationComponent implements OnInit, OnDestroy {
     );
     this.addFormDataToForm();
   }
-
+  
+  /*
+   * Subscribe to registration$ to emit json, which will be used as form data.
+   */
   addFormDataToForm(): void {
     this.subs.add(
       this.registration$.subscribe(
@@ -59,7 +63,7 @@ export class EditRegistrationComponent implements OnInit, OnDestroy {
     this.regForm.updateEditRegistrationForm(this.formRegData);
     this.regForm.updateEditRegistrationForm2(this.formRegData);
     this.registrationService.updateUserId(this.userId);
-    this.router.navigate(['/register']); //this.router.navigate(['/register', { id: Idvalue }]);
+    this.router.navigate(['/register']); //this.router.navigate(['/register', { id: Idvalue }])
   }
 
   ngOnDestroy(): void {
