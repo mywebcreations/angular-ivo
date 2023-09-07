@@ -12,14 +12,15 @@ import { AngularMaterialModule } from './material.module';
 import { HttpClientModule } from '@angular/common/http';
 import { EditRegistrationComponent } from './edit-registration/edit-registration.component';
 import { CreateRegFormService } from './core/service/create-reg-form.service';
-
+import { NavComponent } from './core/nav/nav.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     RegistrationComponent,
-    EditRegistrationComponent
+    EditRegistrationComponent,
+    NavComponent
   ],
   imports: [
     BrowserModule,
